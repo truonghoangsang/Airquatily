@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự đoán chất lượng không khí</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/img/goose-blue-bottom.png'); 
+
+        }
+        header {
+            background-color: #05223e;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        footer {
+            background-color: #05223e;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .container {
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Giới hạn chiều rộng */
+        }
+        .form-group {
+            margin-bottom: 15px; /* Khoảng cách giữa các trường */
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            height: 45px; /* Chiều cao đồng đều cho các textbox */
+            width: 90%;
+        }
+        .btn-primary {
+            width: 100%; /* Chiều rộng nút dự đoán */
+            height: 45px; /* Chiều cao nút dự đoán */
+            font-size: 16px; /* Kích thước chữ trong nút */
+        }
+        .result {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #28a745;
+            text-align: center; /* Canh giữa kết quả */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dự đoán chất lượng không khí</h1>
+    </header>
+
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="model_type">Chọn phương thức dự đoán</label>
+                <select class="form-control" id="model_type" name="model_type" required>
+                    <option value="linear">Hồi quy tuyến tính</option>
+                    <option value="random_forest">Rừng ngẫu nhiên</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="CO">CO (GT) - µg/m³</label>
+                <input type="number" class="form-control" id="CO" name="CO" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="NMHC">NMHC (GT) - µg/m³</label>
+                <input type="number" class="form-control" id="NMHC" name="NMHC" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="C6H6">C6H6 (GT) - µg/m³</label>
+                <input type="number" class="form-control" id="C6H6" name="C6H6" step="any" required>
+            </div>
+            <div class="form-group">
+                < <label for="NOx">NOx (GT) - µg/m³</label>
+                <input type="number" class="form-control" id="NOx" name="NOx" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="NO2">NO2 (GT) - µg/m³</label>
+                <input type="number" class="form-control" id="NO2" name="NO2" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="PT08.S2">PT08.S2 (NMHC) - µg/m³</label>
+                <input type="number" class="form-control" id="PT08.S2" name="PT08.S2" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="T">Nhiệt độ (T) - °C</label>
+                <input type="number" class="form-control" id="T" name="T" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="RH">Độ ẩm (RH) - %</label>
+                <input type="number" class="form-control" id="RH" name="RH" step="any" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Dự đoán</button>
+        </form>
+        {% if prediction is not none %}
+            <div class="result">Kết quả dự đoán chất lượng không khí: {{ prediction }}</div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Dự đoán chất lượng không khí</p>
+    </footer>
+</body>
+</html>
